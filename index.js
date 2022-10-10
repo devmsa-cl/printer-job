@@ -15,18 +15,13 @@ const dir = path.resolve("files");
 // reading all the files in the files folder
 fs.readdir(dir, (err, files) => {
   if (err) return console.log(err);
-
   printFiles = files;
-
-  //   printJob();
 });
 
 const job = new cronJob(
-  "1/1 * * * *",
-  //   process.env.CRON_JOB,
+  process.env.CRON_JOB,
   function () {
-    PrintFile();
-    // printJob();
+    printJob();
   },
   null,
   true,
@@ -35,12 +30,7 @@ const job = new cronJob(
 
 job.start();
 
-function PrintFile() {
-  console.log(printFiles[index]);
-  getNextFileReady();
-}
-
-// update the index and get the next file to ready to print
+// update the index and get the next file ready to print
 function getNextFileReady() {
   index++;
   if (index >= printFiles.length) index = 0;
